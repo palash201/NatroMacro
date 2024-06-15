@@ -7670,7 +7670,7 @@ nm_BitterberryFeeder(*)
 		Loop 10
 		{
 			Sleep 100
-			pBMScreen := Gdip_BitmapFromScreen(windowX+(54*windowWidth)//100-300 "|" windowY+offsetY+(46*windowHeight)//100-59 "|250|100")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+(54*windowWidth)//100-300 "|" windowY+offsetY+(46*windowHeight)//100-59 "|250|100")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["feed"], &pos, , , , , 2, , 2) = 1)
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -7690,7 +7690,7 @@ nm_BitterberryFeeder(*)
 		}
 		Sleep 750
 
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-295 "|" windowY+offsetY+((4*windowHeight)//10 - 15) "|150|50")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-295 "|" windowY+offsetY+((4*windowHeight)//10 - 15) "|150|50")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["greensuccess"], , , , , , 20) = 1) {
 			if (MsgBox("SUCCESS!!!!``nKeep this?", "Bitterberry Auto-Feeder v0.2", 0x40024) = "Yes")
 			{
@@ -7809,7 +7809,7 @@ nm_BasicEggHatcher(*)
 		Loop 10
 		{
 			Sleep 100
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+offsetY+windowHeight//2-52 "|500|150")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+offsetY+windowHeight//2-52 "|500|150")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1)
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -7825,7 +7825,7 @@ nm_BasicEggHatcher(*)
 		}
 		Sleep 750
 
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-155 "|" windowY+offsetY+((4*windowHeight)//10 - 135) "|310|205"), rj := 0
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-155 "|" windowY+offsetY+((4*windowHeight)//10 - 135) "|310|205"), rj := 0
 		if (Gdip_ImageSearch(pBMScreen, pBMM, , 50, 165, 260, 205, 2, , , 5) = 5) { ; Mythic Hatched
 			if (MsgBox("MYTHIC!!!!``nKeep this?", "Basic Bee Replacement Program", 0x40024) = "Yes")
 			{
@@ -7895,7 +7895,7 @@ nm_GenerateBeeList(*)
 	MouseMove windowX+30, windowY+offsetY+200, 5
 
 	; obtain lower bound of search
-	pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|306|" windowHeight-offsetY-150)
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|306|" windowHeight-offsetY-150)
 	local pBMWhite, pBMRed, pBMBlue
 	lb := 450
 	for k,v in Map("white",0xffc4c8cb, "red",0xffc7403c, "blue",0xff4d87ca)
@@ -7910,7 +7910,7 @@ nm_GenerateBeeList(*)
 	Gdip_DisposeImage(pBMScreen)
 
 	; loop through bees and fill object
-	pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|306|" lb)
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|306|" lb)
 	ub := 0
 	for k,v in bees
 	{
@@ -7934,7 +7934,7 @@ nm_GenerateBeeList(*)
 				{
 					MouseMove windowX+30, windowY+offsetY+200, 5
 					Sleep 50
-					SendInput "{WheelDown}"
+					ControlSend,, "{WheelDown}", %hwnd%
 				}
 
 				; obtain reference image for scroll distance
@@ -7972,7 +7972,7 @@ nm_GenerateBeeList(*)
 				; wait for scroll end then measure distance
 				Sleep 500 - (f-s)//10000
 				Gdip_DisposeImage(pBMScreen)
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|306|" lb)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|306|" lb)
 				ub := Max(0, ub - (((Gdip_ImageSearch(pBMScreen, pBM, &pos) = 1)) ? Min(lb - 206 - SubStr(pos, InStr(pos, ",")+1), 150 * (lb//150 - 2)) : (150 * (lb//150 - 2))))
 				Gdip_DisposeImage(pBM)
 			}
@@ -8979,7 +8979,7 @@ nm_PlanterDetection()
 
 	ActivateRoblox()
 	GetRobloxClientPos()
-	pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|" windowHeight)
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY "|" windowWidth "|" windowHeight)
 
 	if ((sPlanterStart := Gdip_ImageSearch(pBMScreen, pBMProgressStart, &PStart, , , , , , , 5)) = 1) {
 		x := SubStr(PStart, 1, InStr(PStart, ",")-1), y := SubStr(PStart, InStr(PStart, ",")+1)
@@ -9019,7 +9019,7 @@ nm_PlanterTimeUpdate(FieldName, SetStatus := 1)
 				}
 			}
 
-			sendinput "{" RotUp " 4}"
+			ControlSend,, "{" RotUp " 4}", %hwnd%
 			Sleep 200
 
 			; get prior PlanterBarProgress bounds for comparison
@@ -9044,10 +9044,10 @@ nm_PlanterTimeUpdate(FieldName, SetStatus := 1)
 
 						sleep 2000
 
-						sendinput "{" RotRight " 2}"
+						ControlSend,, "{" RotRight " 2}", %hwnd%
 						sleep 100
 						PlanterBarProgress := nm_PlanterDetection()
-						sendinput "{" RotLeft " 2}"
+						ControlSend,, "{" RotLeft " 2}", %hwnd%
 						sleep 100
 
 						; if second screenshot within +/-10% of first, update
@@ -9065,14 +9065,14 @@ nm_PlanterTimeUpdate(FieldName, SetStatus := 1)
 				}
 
 				Sleep 100
-				sendinput "{" ZoomOut "}"
+				ControlSend,, "{" ZoomOut "}" , %hwnd%
 				if (A_Index = 10)
 				{
-					sendinput "{" RotLeft " 2}"
+					ControlSend,, "{" RotLeft " 2}" , %hwnd%
 					r := 1
 				}
 			}
-			sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+			ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "") , %hwnd%
 			Sleep 500
 		}
 	}
@@ -9092,7 +9092,7 @@ nm_HealthDetection()
 	}
 	ActivateRoblox()
 	GetRobloxClientPos()
-	pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|" windowHeight)
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY "|" windowWidth "|" windowHeight)
 	G := Gdip_GraphicsFromImage(pBMScreen)
 	pBrush := Gdip_BrushCreateSolid(0xff000000)
 	while ((Gdip_ImageSearch(pBMScreen, pBMHealth, &HPStart, , , , , , , 5) > 0) || (Gdip_ImageSearch(pBMScreen, pBMDamage, &HPStart, , , , , , , 5) > 0))
@@ -9300,7 +9300,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 		offsetY := GetYOffset(hwnd)
 		;check that performance stats is disabled
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+36 "|" windowWidth "|24")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+36 "|" windowWidth "|24")
 		if ((Gdip_ImageSearch(pBMScreen, bitmaps["perfmem"], &pos, , , , , 2, , 5) = 1)
 		&& (Gdip_ImageSearch(pBMScreen, bitmaps["perfwhitefill"], , x := SubStr(pos, 1, (comma := InStr(pos, ",")) - 1), y := SubStr(pos, comma + 1), x + 17, y + 7, 2) = 0)) {
 			if ((Gdip_ImageSearch(pBMScreen, bitmaps["perfcpu"], &pos, x + 17, y, , y + 7, 2) = 1)
@@ -9316,7 +9316,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 		Loop 500
 		{
 			GetRobloxClientPos(hwnd)
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["dialog"], &pos, , , , , 10, , 3) != 1) {
 				Gdip_DisposeImage(pBMScreen)
 				break
@@ -9329,7 +9329,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 		MouseMove windowX+350, windowY+offsetY+100
 		;check to make sure you are not in a yes/no prompt
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["no"], &pos, , , , , 2, , 3) = 1) {
 			MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 			Click
@@ -9344,7 +9344,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 			MouseMove windowX+350, windowY+offsetY+100
 		}
 		;check to make sure you are not in blender screen
-		BlenderSS := Gdip_BitmapFromScreen(windowX+windowWidth//2 - 275 "|" windowY+Floor(0.48*windowHeight) - 220 "|550|400")
+		BlenderSS := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2 - 275 "|" windowY+Floor(0.48*windowHeight) - 220 "|550|400")
 		if (Gdip_ImageSearch(BlenderSS, bitmaps["CloseGUI"], , , , , , 5) > 0) {
 			MouseMove windowX+windowWidth//2 - 250, windowY+Floor(0.48*windowHeight) - 200
 			Sleep 150
@@ -9352,7 +9352,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 		}
 		Gdip_DisposeImage(BlenderSS)
 		;check to make sure you are not in sticker screen
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2 - 275 "|" windowY+4*windowHeight//10-178 "|56|56")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2 - 275 "|" windowY+4*windowHeight//10-178 "|56|56")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["CloseGUI"], , , , , , 5) > 0) {
 			MouseMove windowX+windowWidth//2 - 250, windowY+4*windowHeight//10 - 150
 			sleep 150
@@ -9366,9 +9366,9 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 				shopG := nm_imgSearch("shop_corner_G.png",30,"right")
 				shopR := nm_imgSearch("shop_corner_R.png",30,"right")
 				If (shopG[1] = 0 || shopR[1] = 0) {
-					sendinput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}" , %hwnd%
 					Sleep 100
-					sendinput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}" , %hwnd%
 					Sleep 1000
 				}
 			}
@@ -9400,7 +9400,7 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 			while ((n < 2) && (A_Index <= 200))
 			{
 				Sleep 100
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|50")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY "|" windowWidth "|50")
 				n += (Gdip_ImageSearch(pBMScreen, bitmaps["emptyhealth"], , , , , , 10) = (n = 0))
 				Gdip_DisposeImage(pBMScreen)
 			}
@@ -9410,24 +9410,24 @@ nm_Reset(checkAll:=1, wait:=2000, convert:=1, force:=0){
 
 		; hive check
 		if hivedown
-			sendinput "{" RotDown "}"
+			ControlSend,, "{" RotDown "}" , %hwnd%
 		region := windowX "|" windowY+3*windowHeight//4 "|" windowWidth "|" windowHeight//4
 		sconf := windowWidth**2//3200
 		loop 4 {
 			sleep 250+KeyDelay
-			pBMScreen := Gdip_BitmapFromScreen(region), s := 0
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),region), s := 0
 			for i, k in ["day", "night", "day-gifted", "night-gifted", "noshadow-gifted", "noshadow-day", "noshadow-night", "wing"] {
 				s := Max(s, Gdip_ImageSearch(pBMScreen, bitmaps["hive"][k], , , , , , 4, , , sconf))
 				if (s >= sconf) {
 					Gdip_DisposeImage(pBMScreen)
 					HiveConfirmed := 1
-					sendinput "{" RotRight " 4}" (hivedown ? ("{" RotUp "}") : "")
+					ControlSend,, "{" RotRight " 4}" (hivedown ? ("{" RotUp "}") : "") , %hwnd%
 					Send "{" ZoomOut " 5}"
 					break 2
 				}
 			}
 			Gdip_DisposeImage(pBMScreen)
-			sendinput "{" RotRight " 4}" ((A_Index = 2) ? ("{" ((hivedown := !hivedown) ? RotDown : RotUp) "}") : "")
+			ControlSend,, "{" RotRight " 4}" ((A_Index = 2) ? ("{" ((hivedown := !hivedown) ? RotDown : RotUp) "}") : "") , %hwnd%
 		}
 	}
 	;convert
@@ -9454,7 +9454,7 @@ nm_setShiftLock(state, *){
 	ActivateRoblox()
 	GetRobloxClientPos(hwnd)
 
-	pBMScreen := Gdip_BitmapFromScreen(windowX+5 "|" windowY+windowHeight-54 "|50|50")
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+5 "|" windowY+windowHeight-54 "|50|50")
 
 	switch (v := Gdip_ImageSearch(pBMScreen, bitmaps["shiftlock"], , , , , , 2))
 	{
@@ -9495,7 +9495,7 @@ nm_AmuletPrompt(decision:=0, *){
 	else
 		ActivateRoblox()
 
-	pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY "|500|" windowHeight)
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY "|500|" windowHeight)
 
 	if (Gdip_ImageSearch(pBMScreen, bitmaps["keep"], &pos, , , , , 2, , 2) = 1)
 	{
@@ -9514,7 +9514,7 @@ nm_AmuletPrompt(decision:=0, *){
 			Gdip_DisposeImage(pBMScreen)
 			Loop 25
 			{
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY "|500|" windowHeight)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY "|500|" windowHeight)
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1)
 				{
 					MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+SubStr(pos, InStr(pos, ",")+1), 5
@@ -9585,7 +9585,7 @@ nm_gotoCannon(){
 		n := s, f := s+200000000
 		while (n < f)
 		{
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["redcannon"], , , , , , 2, , 2) = 1)
 			{
 				success := 1, Gdip_DisposeImage(pBMScreen)
@@ -9606,7 +9606,7 @@ nm_gotoCannon(){
 					break
 				}
 				Sleep 500
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["redcannon"], , , , , , 2, , 2) = 1)
 				{
 					Gdip_DisposeImage(pBMScreen)
@@ -9645,7 +9645,7 @@ nm_findHiveSlot(){
 	GetRobloxClientPos(hwnd)
 	MouseMove windowX+350, windowY+offsetY+100
 
-	pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 	if ((Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , , , 2, , 2) = 1) || (Gdip_ImageSearch(pBMScreen, bitmaps["collectpollen"], , , , , , 2, , 2) = 1))
 		HiveConfirmed := 1, Gdip_DisposeImage(pBMScreen)
 	else
@@ -9655,10 +9655,10 @@ nm_findHiveSlot(){
 		; find hive slot
 		DllCall("GetSystemTimeAsFileTime","int64p",&s:=0)
 		n := s, f := s+150000000
-		SendInput "{" LeftKey " down}"
+		ControlSend,, "{" LeftKey " down}", %hwnd%
 		while (n < f)
 		{
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 			if ((Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , , , 2, , 2) = 1) || (Gdip_ImageSearch(pBMScreen, bitmaps["collectpollen"], , , , , , 2, , 2) = 1))
 			{
 				HiveConfirmed := 1, Gdip_DisposeImage(pBMScreen)
@@ -9667,7 +9667,7 @@ nm_findHiveSlot(){
 			Gdip_DisposeImage(pBMScreen)
 			DllCall("GetSystemTimeAsFileTime","int64p",&n)
 		}
-		SendInput "{" LeftKey " up}"
+		ControlSend,, "{" LeftKey " up}", %hwnd%
 	}
 
 	if (HiveConfirmed = 1) ; check that hive slot was not overrun, at the expense of a small delay
@@ -9680,7 +9680,7 @@ nm_findHiveSlot(){
 				break
 			}
 			Sleep 500
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 			if ((Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , , , 2, , 2) = 1) || (Gdip_ImageSearch(pBMScreen, bitmaps["collectpollen"], , , , , , 2, , 2) = 1))
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -9764,9 +9764,9 @@ nm_Clock(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "Wealth Clock")
 				break
@@ -9804,12 +9804,12 @@ nm_Blender(){
 
 			searchRet := nm_imgSearch("e_button.png", 30, "high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 
-				SearchX := windowX+windowWidth//2 - 275, SearchY := windowY+Floor(0.48*windowHeight) - 220, BlenderSS := Gdip_BitmapFromScreen(SearchX "|" SearchY "|550|400")
+				SearchX := windowX+windowWidth//2 - 275, SearchY := windowY+Floor(0.48*windowHeight) - 220, BlenderSS := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),SearchX "|" SearchY "|550|400")
 
 				if (Gdip_ImageSearch(BlenderSS, bitmaps["CancelCraft"], , , , , , 2, , 7) > 0) {
 					MouseMove windowX+windowWidth//2 + 230, windowY+Floor(0.48*windowHeight) + 130 ; click cancel button
@@ -9842,7 +9842,7 @@ nm_Blender(){
 				Sleep 800
 				loop
 				{
-					BlenderSS := Gdip_BitmapFromScreen(SearchX "|" SearchY "|170|245")
+					BlenderSS := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),SearchX "|" SearchY "|170|245")
 
 					Blender := %("BlenderItem" BlenderRot)%
 					BlenderIMG := Blender "B"
@@ -9851,7 +9851,7 @@ nm_Blender(){
 					{
 						gdip_disposeimage(BlenderSS)  ; Dispose of the bitmap
 						Sleep 200
-						BlenderSS := Gdip_BitmapFromScreen(SearchX "|" SearchY "|553|400")
+						BlenderSS := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),SearchX "|" SearchY "|553|400")
 						if (Gdip_ImageSearch(BlenderSS, bitmaps["NoItems"], , , , , , 2) > 0) {
 							BlenderItem%BlenderRot% := "None", BlenderAmount%BlenderRot% := 0, BlenderIndex%BlenderRot% := 1, BlenderTime%BlenderRot% := 0
 
@@ -10005,9 +10005,9 @@ nm_Ant() { ;collect Ant Pass then do Challenge
 			nm_gotoCollect("antpass")
 
 			If (nm_imgSearch("e_button.png",30,"high")[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				updateConfig()
 				Sleep 500
 				nm_setStatus("Collected", "Ant Pass")
@@ -10015,7 +10015,7 @@ nm_Ant() { ;collect Ant Pass then do Challenge
 				break
 			}
 			else {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["passfull"], , , , , , 2, , 2) = 1) {
 					(AntPassNum < 10) && nm_setStatus("Confirmed", "10/10 Ant Passes")
 					AntPassNum:=10
@@ -10046,9 +10046,9 @@ nm_Ant() { ;collect Ant Pass then do Challenge
 			Sleep 500
 			Loop 2 {
 				If (nm_imgSearch("e_button.png",30,"high")[1] = 0) {
-					sendinput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					sendinput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 					--AntPassNum
 					nm_setStatus("Attacking", "Ant Challenge")
 					Sleep 500
@@ -10085,7 +10085,7 @@ nm_Ant() { ;collect Ant Pass then do Challenge
 					click "up"
 				}
 				else {
-					pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["passnone"], , , , , , 2, , 2) = 1) {
 						Gdip_DisposeImage(pBMScreen)
 						AntPassNum:=0
@@ -10102,9 +10102,9 @@ nm_Ant() { ;collect Ant Pass then do Challenge
 							Sleep 200
 
 							If (nm_imgSearch("e_button.png",30,"high")[1] = 0) {
-								sendinput "{" SC_E " down}"
+								ControlSend,, "{" SC_E " down}", %hwnd%
 								Sleep 100
-								sendinput "{" SC_E " up}"
+								ControlSend,, "{" SC_E " up}", %hwnd%
 								Sleep 500
 								nm_setStatus("Bought", "Ant Pass")
 								++AntPassNum
@@ -10157,9 +10157,9 @@ nm_RoboPass(){
 			nm_gotoCollect("robopass")
 
 			if (nm_imgSearch("e_button.png",30,"high")[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				updateConfig()
 				Sleep 500
 				nm_setStatus("Collected", "Robo Pass")
@@ -10167,7 +10167,7 @@ nm_RoboPass(){
 				break
 			}
 			else {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["passfull"], , , , , , 2, , 2) = 1) {
 					(RoboPassNum < 10) && nm_setStatus("Confirmed", "10/10 Robo Passes")
 					RoboPassNum:=10
@@ -10205,9 +10205,9 @@ nm_HoneyDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "Honey Dispenser")
 				break
@@ -10233,9 +10233,9 @@ nm_TreatDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "Treat Dispenser")
 				break
@@ -10261,9 +10261,9 @@ nm_BlueberryDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				sleep 500
 				nm_setStatus("Collected", "Blueberry Dispenser")
 				break
@@ -10289,9 +10289,9 @@ nm_StrawberryDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				sleep 500
 				nm_setStatus("Collected", "Strawberry Dispenser")
 				break
@@ -10317,9 +10317,9 @@ nm_CoconutDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				sleep 500
 				nm_setStatus("Collected", "Coconut Dispenser")
 				break
@@ -10367,9 +10367,9 @@ nm_GlueDis(){
 			Sleep 500
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 1000
 				nm_setStatus("Collected", "Glue Dispenser")
 				break
@@ -10395,9 +10395,9 @@ nm_RoyalJellyDis(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "Royal Jelly Dispenser")
 				sleep 10000
@@ -10447,9 +10447,9 @@ nm_Stockings(fromClock:=0){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 
 				movement :=
@@ -10503,11 +10503,11 @@ nm_Feast(){ ; Beesmas Feast
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 3000
-				sendinput "{" RotLeft "}"
+				ControlSend,, "{" RotLeft "}", %hwnd%
 
 				movement :=
 				(
@@ -10550,9 +10550,9 @@ nm_GingerbreadHouse(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 3000
 				nm_setStatus("Collected", "Gingerbread House")
 				break
@@ -10578,9 +10578,9 @@ nm_SnowMachine(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				nm_setStatus("Collected", "Snow Machine")
 				updateConfig()
 				nm_Honeystorm(1) ;collect Honeystorm on the way, then loot
@@ -10610,9 +10610,9 @@ nm_Candles(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 4000
 
 				movement :=
@@ -10650,9 +10650,9 @@ nm_Samovar(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 5000
 
 				movement :=
@@ -10696,9 +10696,9 @@ nm_LidArt(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 5000
 
 				movement :=
@@ -10741,9 +10741,9 @@ nm_GummyBeacon(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "Gummy Beacon")
 				break
@@ -10769,9 +10769,9 @@ nm_RBPDelevel(){ ;Robo Bear Party De-level
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500
 				nm_setStatus("Collected", "RBP De-Level")
 				break
@@ -10804,9 +10804,9 @@ nm_MemoryMatch(MemoryMatchGame) {
 
 		If ((success = 1) && nm_imgSearch("e_button.png",30,"high")[1] = 0) {
 			nm_setStatus("Found", MemoryMatchGame " Memory Match")
-			sendinput "{" SC_E " down}"
+			ControlSend,, "{" SC_E " down}", %hwnd%
 			Sleep 100
-			sendinput "{" SC_E " up}"
+			ControlSend,, "{" SC_E " up}", %hwnd%
 			UpdateConfig()
 			sleep 1500
 			Break
@@ -10837,7 +10837,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 		Xoffset := 0, Tiles := 16
 
 		default:
-		pBMScreen := Gdip_BitmapFromScreen(middleX-250 "|" middleY-210 "|500|50")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),middleX-250 "|" middleY-210 "|500|50")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["MMTitleWide"], , , , , , 8) = 1)
 			Xoffset := 40, Tiles := 20
 		else if (Gdip_ImageSearch(pBMScreen, bitmaps["MMTitle"], , , , , , 8) = 1)
@@ -10878,7 +10878,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 	Loop 10 { ; Numer of available Chances.
 		if(Chances=2) {
 			Loop 1000 {
-				pBMScreen := Gdip_BitmapFromScreen(middleX-275-Xoffset "|" middleY-146 "|100|100") ; Detect Number of Chances
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),middleX-275-Xoffset "|" middleY-146 "|100|100") ; Detect Number of Chances
 				if(Gdip_ImageSearch(pBMScreen, bitmaps["Chances1"], , , , , , 10, , 2) = 1)  {
 					LastChance := 1
 					Gdip_DisposeImage(pBMScreen)
@@ -10972,9 +10972,9 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 
 			MouseMove TileXCordOAC, TileYCordOAC
 			sleep 400 ; I know this looks excessive, but it is to compensate for lag.
-			sendinput "{click down}"
+			ControlSend,, "{click down}", %hwnd%
 			sleep 100
-			sendinput "{click up}"
+			ControlSend,, "{click up}", %hwnd%
 			DllCall("GetSystemTimeAsFileTime", "int64p", &s:=0)
 			sleep 100
 			MouseMove middleX, middleY-190
@@ -10982,7 +10982,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 			Sleep Max(500 - (f - s)//10000, -1) ; match previous version's total sleep 500
 
 			Loop 1000 {
-				pBMScreen := Gdip_BitmapFromScreen(TileXCordOAC-35 "|" TileYCordOAC-20 "|45|30") ; Detect Clicked Item
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),TileXCordOAC-35 "|" TileYCordOAC-20 "|45|30") ; Detect Clicked Item
 				;Gdip_SaveBitmapToFile(pBMScreen, "empty" A_index ".png")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["MMBorder"], , , , 8, 20, 1, , 2) = 1) {
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["MMEmptyTile"], , 25, 10, , , 1, , 2) != 1) {
@@ -10997,7 +10997,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 			Sleep 300
 
 			if(MMItemOAC=1 && PairFoundOAC!=1 && (A_Index=1 || (A_Index=2 && MatchFoundOAC!=1))) {
-				StoreItemOAC[Tile] := Gdip_BitmapFromScreen(TileXCordOAC-25 "|" TileYCordOAC-25 "|50|50") ; Detect Clicked Item
+				StoreItemOAC[Tile] := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),TileXCordOAC-25 "|" TileYCordOAC-25 "|50|50") ; Detect Clicked Item
 				;nm_CreateFolder(path := A_WorkingDir "\MMScreenshots"), Gdip_SaveBitmapToFile(StoreItemOAC[Tile], path "\image" Tile ".png") ; comment out this line for public release
 				for item, data in MemoryMatch {
   					if ((MemoryMatchGame && (%item%MatchIgnore & MemoryMatchGames[MemoryMatchGame].bit)) || (!MemoryMatchGame && (%item%MatchIgnore = data.games))) {
@@ -11013,7 +11013,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 			}
 
 			if(A_index=1) {
-				pBMScreen := Gdip_BitmapFromScreen(middleX-275-Xoffset "|" middleY-146 "|100|100") ; Detect Number of Chances
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),middleX-275-Xoffset "|" middleY-146 "|100|100") ; Detect Number of Chances
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["Chances2"], , , , , , 10, , 2) = 1)
 				Chances:=2
 				Gdip_DisposeImage(pBMScreen)
@@ -11054,7 +11054,7 @@ nm_SolveMemoryMatch(MemoryMatchGame:="") {
 
 	; wait for window to close
 	Loop 50 {
-		pBMScreen := Gdip_BitmapFromScreen(middleX-250 "|" middleY-210 "|500|50")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),middleX-250 "|" middleY-210 "|500|50")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["MMTitle"], , , , , , 8) = 0) {
 			Gdip_DisposeImage(pBMScreen)
 			break
@@ -11096,9 +11096,9 @@ nm_Honeystorm(fromSnowMachine:=0){
 			collected := 0
 			If (HoneystormCheck && (nm_imgSearch("e_button.png",30,"high")[1] = 0)) {
 				collected := 1
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				nm_setStatus("Collected", "Honeystorm")
 				updateConfig()
 			}
@@ -11177,19 +11177,19 @@ nm_StickerPrinter(){
 			nm_gotoCollect("stickerprinter")
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 500 ;//todo: wait for GUI with timeout instead of fixed time
 				GetRobloxClientPos()
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2+150 "|" windowY+4*windowHeight//10+160 "|100|60")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2+150 "|" windowY+4*windowHeight//10+160 "|100|60")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["stickerprinterCD"], , , , , , 10) = 1) {
 					Gdip_DisposeImage(pBMScreen)
 					nm_setStatus("Detected", "Sticker Printer on Cooldown")
 					Sleep 500
-					sendinput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					sendinput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 					break
 				}
 				Gdip_DisposeImage(pBMScreen)
@@ -11198,15 +11198,15 @@ nm_StickerPrinter(){
 				Sleep 200
 				Click
 				Sleep 200
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2+150 "|" windowY+4*windowHeight//10+160 "|100|60")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2+150 "|" windowY+4*windowHeight//10+160 "|100|60")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["stickerprinterConfirm"], , , , , , 10) != 1) {
 					Gdip_DisposeImage(pBMScreen)
 					nm_setStatus("Error", "No Eggs left in inventory!`nSticker Printer has been disabled.")
 					StickerPrinterCheck := 0
 					Sleep 500
-					sendinput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					sendinput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 					break
 				}
 				Gdip_DisposeImage(pBMScreen)
@@ -11216,7 +11216,7 @@ nm_StickerPrinter(){
 				i := 0
 				loop 16 {
 					sleep 250
-					pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 						MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1)-50, windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 						sleep 150
@@ -11274,13 +11274,13 @@ nm_StickerStack(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				sleep 500 ;//todo: wait for GUI with timeout instead of fixed time
 
 				; detect stack boost time
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-275 "|" windowY+4*windowHeight//10 "|550|220")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-275 "|" windowY+4*windowHeight//10 "|550|220")
 				Loop 1 {
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["stickerstackdigits"][")"], &pos, 275, , , 25, 20) = 1) {
 						x := SubStr(pos, 1, InStr(pos, ",")-1)
@@ -11322,9 +11322,9 @@ nm_StickerStack(){
 					nm_setStatus("Error", "No Stickers left to stack!`nSticker Stack has been disabled.")
 					StickerStackCheck := 0
 					Sleep 500
-					sendinput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					sendinput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 					break
 				}
 				Sleep 100
@@ -11334,7 +11334,7 @@ nm_StickerStack(){
 				i := 0
 				loop 16 {
 					sleep 250
-					pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 						MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1)-50, windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 						sleep 150
@@ -11344,9 +11344,9 @@ nm_StickerStack(){
 							Gdip_DisposeImage(pBMScreen)
 							nm_setStatus("Error", "Yes/No appeared too many times!")
 							Sleep 500
-							sendinput "{" SC_E " down}"
+							ControlSend,, "{" SC_E " down}", %hwnd%
 							Sleep 100
-							sendinput "{" SC_E " up}"
+							ControlSend,, "{" SC_E " up}", %hwnd%
 							break 2
 						}
 					} else if (i > 0) {
@@ -11357,9 +11357,9 @@ nm_StickerStack(){
 						nm_setStatus("Error", "No Tickets left to use!`nSticker Stack has been disabled.")
 						StickerStackCheck := 0
 						Sleep 500
-						sendinput "{" SC_E " down}"
+						ControlSend,, "{" SC_E " down}", %hwnd%
 						Sleep 100
-						sendinput "{" SC_E " up}"
+						ControlSend,, "{" SC_E " up}", %hwnd%
 						break 2
 					}
 					Gdip_DisposeImage(pBMScreen)
@@ -11393,9 +11393,9 @@ nm_shrine(){
 
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
-				sendinput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				sendinput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep (2000+KeyDelay)
 
 				GetRobloxClientPos(hwnd := GetRobloxHWND())
@@ -11405,7 +11405,7 @@ nm_shrine(){
 				sleep 300
 				Loop {
 					sleep 150
-					pBMScreen := Gdip_BitmapFromScreen(WindowX+Floor(0.515*windowWidth)-250 "|" windowY+Floor(0.535*windowHeight)-100 "|500|300")
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),WindowX+Floor(0.515*windowWidth)-250 "|" windowY+Floor(0.535*windowHeight)-100 "|500|300")
 					Donation := %("ShrineItem" ShrineRot)%
 
 					if (Gdip_ImageSearch(pBMScreen, Shrine[Donation], , , , , , 2, , 4) > 0) {
@@ -11424,7 +11424,7 @@ nm_shrine(){
 						sleep 2000
 						GetRobloxClientPos(hwnd)
 						Loop 500 {
-							pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
+							pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
 							if (Gdip_ImageSearch(pBMScreen, bitmaps["dialog"], &pos, , , , , 10, , 3) != 1) {
 								Gdip_DisposeImage(pBMScreen)
 								break
@@ -11565,9 +11565,9 @@ nm_toBooster(location){
 		(location="coconut") ? (nm_gotoCollect("coconutdis")) : (nm_gotoBooster(location))
 		searchRet := nm_imgSearch("e_button.png",30,"high")
 		if (searchRet[1] = 0) {
-			sendinput "{" SC_E " down}"
+			ControlSend,, "{" SC_E " down}", %hwnd%
 			Sleep 100
-			sendinput "{" SC_E " up}"
+			ControlSend,, "{" SC_E " up}", %hwnd%
 			Sleep 1000
 			success:=1
 			break
@@ -11895,7 +11895,7 @@ nm_Bugrun(){
 				{
 					nm_setStatus("Attacking", "Spider")
 					Send "{" SC_1 "}"
-					SendInput "{" RotUp " 4}"
+					ControlSend,, "{" RotUp " 4}", %hwnd%
 					if(!DisableToolUse)
 						Click "Down"
 					r := 0
@@ -11910,10 +11910,10 @@ nm_Bugrun(){
 								Break
 							if (A_Index=10)
 							{
-								SendInput "{" RotLeft " 2}"
+								ControlSend,, "{" RotLeft " 2}", %hwnd%
 								r := 1
 							}
-							SendInput "{" ZoomOut "}"
+							ControlSend,, "{" ZoomOut "}", %hwnd%
 							Sleep 100
 							if (A_Index=20)
 							{
@@ -11924,7 +11924,7 @@ nm_Bugrun(){
 						if(youDied)
 							break
 					}
-					sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+					ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 					Sleep 500
 					Click "Up"
 					if(VBState=1)
@@ -11974,7 +11974,7 @@ nm_Bugrun(){
 				KeyWait "F14", "D T5 L"
 				KeyWait "F14", "T60 L"
 				nm_endWalk()
-				SendInput "{" RotLeft " 2}"
+				ControlSend,, "{" RotLeft " 2}", %hwnd%
 			} else {
 				bypass:=0
 			}
@@ -12015,7 +12015,7 @@ nm_Bugrun(){
 					if (found)
 					{
 						nm_setStatus("Attacking", "Ladybugs (Strawberry)")
-						SendInput "{" RotUp " 4}"
+						ControlSend,, "{" RotUp " 4}", %hwnd%
 						Send "{" SC_1 "}"
 						if(!DisableToolUse)
 							Click "Down"
@@ -12031,11 +12031,11 @@ nm_Bugrun(){
 									Break
 								if (A_Index=5)
 								{
-									SendInput "{" RotLeft " 2}"
+									ControlSend,, "{" RotLeft " 2}", %hwnd%
 									r := 1
 								}
 								Sleep 100
-								SendInput "{" ZoomOut "}"
+								ControlSend,, "{" ZoomOut "}", %hwnd%
 								if (A_Index=10)
 								{
 									success:=1
@@ -12045,7 +12045,7 @@ nm_Bugrun(){
 							if(youDied)
 								break
 						}
-						sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+						ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 						Sleep 500
 						Click "Up"
 						if(VBState=1)
@@ -12109,7 +12109,7 @@ nm_Bugrun(){
 					nm_Reset(1, wait)
 					nm_setStatus("Traveling", "Ladybugs (Mushroom)")
 					nm_gotoField(BugRunField)
-					SendInput "{" RotLeft " 2}"
+					ControlSend,, "{" RotLeft " 2}", %hwnd%
 				}
 				bypass:=0
 				found:=0
@@ -12127,7 +12127,7 @@ nm_Bugrun(){
 				{
 					nm_setStatus("Attacking", "Ladybugs (Mushroom)")
 					Send "{" SC_1 "}"
-					SendInput "{" RotUp " 4}"
+					ControlSend,, "{" RotUp " 4}", %hwnd%
 					if(!DisableToolUse)
 						Click "Down"
 					r := 0
@@ -12141,11 +12141,11 @@ nm_Bugrun(){
 								Break
 							if (A_Index=10)
 							{
-								SendInput "{" RotLeft " 2}"
+								ControlSend,, "{" RotLeft " 2}", %hwnd%
 								r := 1
 							}
 							Sleep 100
-							SendInput "{" ZoomOut "}"
+							ControlSend,, "{" ZoomOut "}", %hwnd%
 							if (A_Index=20)
 							{
 								success:=1
@@ -12155,7 +12155,7 @@ nm_Bugrun(){
 						if(youDied)
 							break
 					}
-					sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+					ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 					Sleep 500
 					Click "Up"
 					if(VBState=1)
@@ -12233,7 +12233,7 @@ nm_Bugrun(){
 				{
 					nm_setStatus("Attacking")
 					Send "{" SC_1 "}"
-					SendInput "{" RotUp " 4}"
+					ControlSend,, "{" RotUp " 4}", %hwnd%
 					if(!DisableToolUse)
 						Click "Down"
 					loop 10 { ;wait to kill
@@ -12254,7 +12254,7 @@ nm_Bugrun(){
 						if(youDied)
 							break
 					}
-					SendInput "{" RotDown " 4}"
+					ControlSend,, "{" RotDown " 4}", %hwnd%
 					click "up"
 					if(VBState=1)
 						return
@@ -12348,7 +12348,7 @@ nm_Bugrun(){
 				{
 					nm_setStatus("Attacking")
 					Send "{" SC_1 "}"
-					SendInput "{" RotUp " 4}"
+					ControlSend,, "{" RotUp " 4}", %hwnd%
 					if(!DisableToolUse)
 						Click "Down"
 					r := 0
@@ -12362,11 +12362,11 @@ nm_Bugrun(){
 								Break
 							if (A_Index=10)
 							{
-								SendInput "{" RotLeft " 2}"
+								ControlSend,, "{" RotLeft " 2}", %hwnd%
 								r := 1
 							}
 							Sleep 100
-							SendInput "{" ZoomOut "}"
+							ControlSend,, "{" ZoomOut "}", %hwnd%
 							if (A_Index=20)
 							{
 								success:=1
@@ -12376,7 +12376,7 @@ nm_Bugrun(){
 						if(youDied)
 							break
 					}
-					sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+					ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 					Sleep 500
 					Click "Up"
 					if(VBState=1)
@@ -12440,7 +12440,7 @@ nm_Bugrun(){
 					{
 						nm_setStatus("Attacking")
 						Send "{" SC_1 "}"
-						SendInput "{" RotUp " 4}"
+						ControlSend,, "{" RotUp " 4}", %hwnd%
 						if(!DisableToolUse)
 							Click "Down"
 						r := 0
@@ -12454,11 +12454,11 @@ nm_Bugrun(){
 									Break
 								if (A_Index=10)
 								{
-									SendInput "{" RotLeft " 2}"
+									ControlSend,, "{" RotLeft " 2}", %hwnd%
 									r := 1
 								}
 								Sleep 100
-								SendInput "{" ZoomOut "}"
+								ControlSend,, "{" ZoomOut "}", %hwnd%
 								if (A_Index=20)
 								{
 									success:=1
@@ -12468,7 +12468,7 @@ nm_Bugrun(){
 							if(youDied)
 								break
 						}
-						sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+						ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 						Sleep 500
 						Click "Up"
 						if(VBState=1)
@@ -12550,7 +12550,7 @@ nm_Bugrun(){
 				Send "{" SC_Space " up}"
 				DllCall("Sleep","UInt",800)
 				Send "{" FwdKey " up}"
-				SendInput "{" RotLeft " 2}"
+				ControlSend,, "{" RotLeft " 2}", %hwnd%
 				SetKeyDelay PrevKeyDelay
 				nm_Move(14000*MoveSpeedFactor, FwdKey)
 			} else {
@@ -12591,7 +12591,7 @@ nm_Bugrun(){
 				{
 					nm_setStatus("Attacking")
 					Send "{" SC_1 "}"
-					SendInput "{" RotUp " 4}"
+					ControlSend,, "{" RotUp " 4}", %hwnd%
 					if(!DisableToolUse)
 						Click "Down"
 					;disableDayOrNight:=1
@@ -12606,11 +12606,11 @@ nm_Bugrun(){
 								Break
 							if (A_Index=10)
 							{
-								SendInput "{" RotLeft " 2}"
+								ControlSend,, "{" RotLeft " 2}", %hwnd%
 								r := 1
 							}
 							Sleep 100
-							SendInput "{" ZoomOut "}"
+							ControlSend,, "{" ZoomOut "}", %hwnd%
 							if (A_Index=20)
 							{
 								success:=1
@@ -12621,7 +12621,7 @@ nm_Bugrun(){
 							break
 						Sleep 250
 					}
-					sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+					ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 					Sleep 500
 					Click "Up"
 					;disableDayOrNight:=0
@@ -12689,7 +12689,7 @@ nm_Bugrun(){
 					{
 						nm_setStatus("Attacking", "Werewolf (Pumpkin)")
 						Send "{" SC_1 "}"
-						SendInput "{" RotUp " 4}"
+						ControlSend,, "{" RotUp " 4}", %hwnd%
 						if(!DisableToolUse)
 							Click "Down"
 						loop 25 { ;wait to kill
@@ -12708,7 +12708,7 @@ nm_Bugrun(){
 										Success:=1
 										Break 2
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									Sleep 250
 								}
 							} else if(mod(A_Index,4)=2){
@@ -12725,7 +12725,7 @@ nm_Bugrun(){
 										Success:=1
 										Break 2
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									Sleep 250
 								}
 							} else if(mod(A_Index,4)=3){
@@ -12742,7 +12742,7 @@ nm_Bugrun(){
 										Success:=1
 										Break 2
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									Sleep 250
 								}
 							} else if(mod(A_Index,4)=0){
@@ -12759,7 +12759,7 @@ nm_Bugrun(){
 										Success:=1
 										Break 2
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									Sleep 250
 								}
 							}
@@ -12768,7 +12768,7 @@ nm_Bugrun(){
 							if(youDied)
 								break
 						}
-						SendInput "{" RotDown " 4}"
+						ControlSend,, "{" RotDown " 4}", %hwnd%
 						Sleep 500
 						Click "Up"
 						if(VBState=1)
@@ -12853,7 +12853,7 @@ nm_Bugrun(){
 					{
 						nm_setStatus("Attacking")
 						Send "{" SC_1 "}"
-						SendInput "{" RotUp " 4}"
+						ControlSend,, "{" RotUp " 4}", %hwnd%
 						if(!DisableToolUse)
 							Click "Down"
 						r := 0
@@ -12867,11 +12867,11 @@ nm_Bugrun(){
 									Break
 								if (A_Index=5)
 								{
-									SendInput "{" RotLeft " 2}"
+									ControlSend,, "{" RotLeft " 2}", %hwnd%
 									r := 1
 								}
 								Sleep 100
-								SendInput "{" ZoomOut "}"
+								ControlSend,, "{" ZoomOut "}", %hwnd%
 								if (A_Index=10)
 								{
 									success:=1
@@ -12881,7 +12881,7 @@ nm_Bugrun(){
 							if(youDied)
 								break
 						}
-						sendinput "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
+						ControlSend,, "{" RotDown " 4}" ((r = 1) ? "{" RotRight " 2}" : "")
 						Sleep 500
 						Click "Up"
 						if(VBState=1)
@@ -12983,7 +12983,7 @@ nm_Bugrun(){
 					if (found)
 					{
 						nm_setStatus("Attacking")
-						SendInput "{" RotUp " 4}"
+						ControlSend,, "{" RotUp " 4}", %hwnd%
 						Send "{" SC_1 "}"
 						if(!DisableToolUse)
 							Click "Down"
@@ -12998,7 +12998,7 @@ nm_Bugrun(){
 									{
 										Break
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									if (A_Index=5)
 									{
 										Success:=1
@@ -13031,7 +13031,7 @@ nm_Bugrun(){
 									{
 										Break
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									if (A_Index=5)
 									{
 										Success:=1
@@ -13048,7 +13048,7 @@ nm_Bugrun(){
 									{
 										Break
 									}
-									SendInput "{" ZoomOut "}"
+									ControlSend,, "{" ZoomOut "}", %hwnd%
 									if (A_Index=5)
 									{
 										Success:=1
@@ -13062,7 +13062,7 @@ nm_Bugrun(){
 							if(youDied)
 								break
 						}
-						SendInput "{" RotDown " 4}"
+						ControlSend,, "{" RotDown " 4}", %hwnd%
 						Sleep 500
 						Click "Up"
 						if(VBState=1)
@@ -13121,9 +13121,9 @@ nm_Bugrun(){
 					nm_gotoCannon()
 					PrevKeyDelay := A_KeyDelay
 					SetKeyDelay 5
-					SendInput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					SendInput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 					DllCall("Sleep","UInt",50)
 					Send "{" LeftKey " down}"
 					DllCall("Sleep","UInt",1050)
@@ -13179,7 +13179,7 @@ nm_Bugrun(){
 				;attack tunnel bear
 				TBdead:=0
 				if(found) {
-					SendInput "{" RotUp " 3}"
+					ControlSend,, "{" RotUp " 3}", %hwnd%
 					nm_setStatus("Attacking", "Tunnel Bear")
 					loop 120 {
 						loop 15 {
@@ -13190,7 +13190,7 @@ nm_Bugrun(){
 						}
 						if(nm_imgSearch("tunnelbeardead.png",25,"lowright")[1] = 0){
 							TBdead:=1
-							SendInput "{" RotDown " 3}"
+							ControlSend,, "{" RotDown " 3}", %hwnd%
 							break
 						}
 						if(youDied)
@@ -13931,9 +13931,9 @@ nm_Bugrun(){
 						Loop 600
 						{
 							if(!DisableToolUse) {
-								sendinput "{click down}"
+								ControlSend,, "{click down}", %hwnd%
 								sleep 50
-								sendinput "{click up}"
+								ControlSend,, "{click up}", %hwnd%
 							}
 							if(nm_imgSearch("crab.png",70,"lowright")[1] = 0){
 								Crdead:=1
@@ -14533,7 +14533,7 @@ nm_GoGather(){
 	;rotate
 	if (FieldRotateDirection != "None") {
 		direction:=FieldRotateDirection
-		sendinput "{" Rot%direction% " " FieldRotateTimes "}"
+		ControlSend,, "{" Rot%direction% " " FieldRotateTimes "}", %hwnd%
 	}
 	;determine if facing corner
 	FacingFieldCorner:=0
@@ -14719,7 +14719,7 @@ nm_GoGather(){
 		;rotate back
 		if (FieldRotateDirection != "None") {
 			direction:=(FieldRotateDirection = "left") ? "right" : "left"
-			sendinput "{" Rot%direction% " " FieldRotateTimes "}"
+			ControlSend,, "{" Rot%direction% " " FieldRotateTimes "}", %hwnd%
 		}
 		;close quest log if necessary
 		nm_OpenMenu()
@@ -14785,7 +14785,7 @@ nm_GoGather(){
 						Sleep 1000
 						break
 					}
-					SendInput "{" RotRight " 4}"
+					ControlSend,, "{" RotRight " 4}", %hwnd%
 					sleep (250+KeyDelay)
 					If (A_Index=4)
 					{
@@ -14803,9 +14803,9 @@ nm_GoGather(){
 
 					searchRet := nm_imgSearch("e_button.png",30,"high")
 					if (searchRet[1] = 0) {
-						SendInput "{" SC_E " down}"
+						ControlSend,, "{" SC_E " down}", %hwnd%
 						Sleep 100
-						SendInput "{" SC_E " up}"
+						ControlSend,, "{" SC_E " up}", %hwnd%
 
 						LastWreath:=nowUnix()
 						IniWrite LastWreath, "settings\nm_config.ini", "Collect", "LastWreath"
@@ -14934,7 +14934,7 @@ nm_GoGather(){
 						Sleep 1000
 						break
 					}
-					SendInput "{" RotRight " 4}"
+					ControlSend,, "{" RotRight " 4}", %hwnd%
 					sleep (250+KeyDelay)
 					If (A_Index=4)
 					{
@@ -15190,7 +15190,7 @@ nm_loot(length, reps, direction, tokenlink:=0){ ; length in tiles instead of ms 
 		n := s, f := s+length*reps*10000000 ; timeout at length * reps
 		while ((n < f) && GetKeyState("F14"))
 		{
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth-400 "|" windowY+windowHeight-400 "|400|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth-400 "|" windowY+windowHeight-400 "|400|400")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["tokenlink"], , , , , , 50, , 7) = 1)
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -15216,15 +15216,15 @@ nm_convert(){
 	hwnd := GetRobloxHWND()
 	offsetY := GetYOffset(hwnd)
 	GetRobloxClientPos(hwnd)
-	pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|400|120")
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|400|120")
 	if ((HiveConfirmed = 0) || (state = "Converting") || (Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , , , 2, , 6) = 0)) {
 		Gdip_DisposeImage(pBMScreen)
 		return
 	}
 	if (Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , , , 2, , 2) = 1) {
-		SendInput "{" SC_E " down}"
+		ControlSend,, "{" SC_E " down}", %hwnd%
 		Sleep 100
-		SendInput "{" SC_E " up}"
+		ControlSend,, "{" SC_E " up}", %hwnd%
 	}
 	Gdip_DisposeImage(pBMScreen)
 	ConvertStartTime:=nowUnix()
@@ -15254,11 +15254,11 @@ nm_convert(){
 				return
 			}
 			GetRobloxClientPos(hwnd)
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , 400, 120, 2, , 2) = 1) {
-				SendInput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				SendInput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 			}
 			if ((Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , 400, 120, 2, , 6) = 0)
 				|| ((Gdip_ImageSearch(pBMScreen, bitmaps["hiveballoon"], , windowWidth//2, windowHeight-offsetY-36-400, , , 40, , 3) = 1) && (ballooncomplete:=1))) {
@@ -15277,7 +15277,7 @@ nm_convert(){
 		strikes:=0
 		while ((strikes <= 5) && (A_Index <= 50)) {
 			GetRobloxClientPos(hwnd)
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
 			if ((ballooncomplete = 1) || (Gdip_ImageSearch(pBMScreen, bitmaps["hiveballoon"], , windowWidth//2, windowHeight-offsetY-36-400, , , 40, , 3) = 1)) {
 				Gdip_DisposeImage(pBMScreen)
 				nm_setStatus("Converting", "Balloon Refreshed")
@@ -15324,11 +15324,11 @@ nm_convert(){
 					MouseMove windowX+windowWidth-30, windowY+offsetY+16
 					click
 				}
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|" windowWidth//2+200 "|" windowHeight-offsetY-36)
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["makehoney"], , , , 400, 120, 2, , 2) = 1) {
-					SendInput "{" SC_E " down}"
+					ControlSend,, "{" SC_E " down}", %hwnd%
 					Sleep 100
-					SendInput "{" SC_E " up}"
+					ControlSend,, "{" SC_E " up}", %hwnd%
 				}
 				if ((Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , 400, 120, 2, , 6) = 0)
 					|| (Gdip_ImageSearch(pBMScreen, bitmaps["hiveballoon"], , windowWidth//2, windowHeight-offsetY-36-400, , , 40, , 3) = 1)) {
@@ -15514,7 +15514,7 @@ nm_JumpSprinkler(resetDelay := 0){
 		Sleep JumpDelay
 		Send "{" SC_1 "}{" SC_Space " up}"
 		Sleep 500
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth-356 "|" windowY+windowHeight-326 "|340|300")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth-356 "|" windowY+windowHeight-326 "|340|300")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["standing"], , , , , , 20) = 1) { ; jumped too high
 			JumpDelay := Max(JumpDelay - 50, 100)
 		} else if (Gdip_ImageSearch(pBMScreen, bitmaps["thisclose"], , , , , , 20) = 1) { ; not high enough
@@ -15542,33 +15542,33 @@ nm_fieldDriftCompensation(){
 		if (!DisableToolUse)
 			click "down"
 		if ((x < winleft) && (hmove := LeftKey))
-			sendinput "{" LeftKey " down}"
+			ControlSend,, "{" LeftKey " down}", %hwnd%
 		else if ((x > winRight) && (hmove := RightKey))
-			sendinput "{" RightKey " down}"
+			ControlSend,, "{" RightKey " down}", %hwnd%
 		if ((y < winUp) && (vmove := FwdKey))
-			sendinput "{" FwdKey " down}"
+			ControlSend,, "{" FwdKey " down}", %hwnd%
 		else if ((y > winDown) && (vmove := BackKey))
-			sendinput "{" BackKey " down}"
+			ControlSend,, "{" BackKey " down}", %hwnd%
 		while (hmove || vmove) {
 			if (((hmove = LeftKey) && (x >= winLeft)) || ((hmove = RightKey) && (x <= winRight))) {
-				sendinput "{" hmove " up}"
+				ControlSend,, "{" hmove " up}", %hwnd%
 				hmove := ""
 			}
 			if (((vmove = FwdKey) && (y >= winUp)) || ((vmove = BackKey) && (y <= winDown))) {
-				sendinput "{" vmove " up}"
+				ControlSend,, "{" vmove " up}", %hwnd%
 				vmove := ""
 			}
 			Sleep 20
 			if ((A_Index >= 300)) {
-				sendinput "{" LeftKey " up}{" RightKey " up}{" FwdKey " up}{" BackKey " up}"
+				ControlSend,, "{" LeftKey " up}{" RightKey " up}{" FwdKey " up}{" BackKey " up}", %hwnd%
 				break
 			}
 			if (nm_LocateSprinkler(&x, &y) = 0) {
-				sendinput "{" LeftKey " up}{" RightKey " up}{" FwdKey " up}{" BackKey " up}"
+				ControlSend,, "{" LeftKey " up}{" RightKey " up}{" FwdKey " up}{" BackKey " up}", %hwnd%
 				Loop 25 {
 					Sleep 20
 					if (nm_LocateSprinkler(&x, &y) = 1) {
-						sendinput (hmove ? "{" hmove " down} " : "") (vmove ? "{" vmove " down} " : "")
+						ControlSend,, (hmove ? "{" hmove " down} " : "") (vmove ? "{" vmove " down} " : "")
 						continue 2
 					}
 				}
@@ -15585,7 +15585,7 @@ nm_LocateSprinkler(&X:="", &Y:=""){ ; find client coordinates of approximately c
 	hwnd := GetRobloxHWND()
 	offsetY := GetYOffset(hwnd)
 	GetRobloxClientPos(hwnd)
-	pBMScreen := Gdip_BitmapFromScreen(windowX "|" (windowY + offsetY + 75) "|" (hWidth := windowWidth) "|" (hHeight := windowHeight - offsetY - 75) "|")
+	pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" (windowY + offsetY + 75) "|" (hWidth := windowWidth) "|" (hHeight := windowHeight - offsetY - 75) "|")
 
 	Gdip_LockBits(pBMScreen, 0, 0, hWidth, hHeight, &hStride, &hScan, &hBitmapData, 1)
 	hWidth := NumGet(hBitmapData, 0, "UInt"), hHeight := NumGet(hBitmapData, 4, "UInt")
@@ -15722,7 +15722,7 @@ DisconnectCheck(testCheck := 0)
 	ActivateRoblox()
 	GetRobloxClientPos()
 	if ((windowWidth > 0) && !WinExist("Roblox Crash")) {
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2 "|" windowY+windowHeight//2 "|200|80")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2 "|" windowY+windowHeight//2 "|200|80")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["disconnected"], , , , , , 2) != 1) {
 			Gdip_DisposeImage(pBMScreen)
 			return 0
@@ -15826,7 +15826,7 @@ DisconnectCheck(testCheck := 0)
 					nm_setStatus("Warning", "Disconnected during Reconnect")
 					continue 2
 				}
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+30 "|" windowWidth "|" windowHeight-30)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+30 "|" windowWidth "|" windowHeight-30)
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["loading"], , , , , 150, 4) = 1) {
 					Gdip_DisposeImage(pBMScreen)
 					nm_setStatus("Detected", "Game Open")
@@ -15857,7 +15857,7 @@ DisconnectCheck(testCheck := 0)
 					nm_setStatus("Warning", "Disconnected during Reconnect")
 					continue 2
 				}
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+30 "|" windowWidth "|" windowHeight-30)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+30 "|" windowWidth "|" windowHeight-30)
 				if ((Gdip_ImageSearch(pBMScreen, bitmaps["loading"], , , , , 150, 4) = 0) || (Gdip_ImageSearch(pBMScreen, bitmaps["science"], , , , , 150, 2) = 1)) {
 					Gdip_DisposeImage(pBMScreen)
 					nm_setStatus("Detected", "Game Loaded")
@@ -15968,7 +15968,7 @@ LegacyReconnect(linkCode, i)
 				Sleep 1000
 				break 2
 			}
-			pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+30 "|" windowWidth "|150")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+30 "|" windowWidth "|150")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["loading"], , , , , , 4) = 1)
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -16005,7 +16005,7 @@ LegacyReconnect(linkCode, i)
 				Sleep 1000
 				break 2
 			}
-			pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+30 "|" windowWidth "|150")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+30 "|" windowWidth "|150")
 			if ((Gdip_ImageSearch(pBMScreen, bitmaps["loading"], , , , , , 4) = 0) || (Gdip_ImageSearch(pBMScreen, bitmaps["science"], , , , , , 2) = 1))
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -16093,14 +16093,14 @@ nm_claimHiveSlot(){
 	static LastNatroSoBroke := 1
 
 	GetBitmap() {
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 		while ((A_Index <= 20) && (Gdip_ImageSearch(pBMScreen, bitmaps["FriendJoin"], , , , , , 6) = 1)) {
 			Gdip_DisposeImage(pBMScreen)
 			MouseMove windowX+windowWidth//2-3, windowY+24
 			Click
 			MouseMove windowX+350, windowY+offsetY+100
 			Sleep 500
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 		}
 		return pBMScreen
 	}
@@ -16128,7 +16128,7 @@ nm_claimHiveSlot(){
 			{
 				Sleep 100
 				GetRobloxClientPos(hwnd)
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|50")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY "|" windowWidth "|50")
 				n += (Gdip_ImageSearch(pBMScreen, bitmaps["emptyhealth"], , , , , , 10) = (n = 0))
 				Gdip_DisposeImage(pBMScreen)
 			}
@@ -16220,9 +16220,9 @@ nm_claimHiveSlot(){
 			return 0
 	}
 
-	SendInput "{" SC_E " down}"
+	ControlSend,, "{" SC_E " down}", %hwnd%
 	Sleep 100
-	SendInput "{" SC_E " up}"
+	ControlSend,, "{" SC_E " up}", %hwnd%
 	HiveConfirmed := 1
 	;update hive slot
 	MainGui["HiveSlot"].Text := HiveSlot
@@ -16299,7 +16299,7 @@ nm_searchForE(){
 	n := s, f := s+90*10000000 ; 90 second timeout
 	while (n < f && GetKeyState("F14"))
 	{
-		pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , , , 2, , 6) = 1)
 		{
 			success := 1, Gdip_DisposeImage(pBMScreen)
@@ -16320,7 +16320,7 @@ nm_searchForE(){
 				break
 			}
 			Sleep 500
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , , , 2, , 6) = 1)
 			{
 				Gdip_DisposeImage(pBMScreen)
@@ -16430,14 +16430,14 @@ nm_Night(){
 nm_confirmNight(){
 	nm_setStatus("Confirming", "Night")
 	nm_Reset(0, 2000, 0)
-	sendinput "{" RotDown " 5}"
+	ControlSend,, "{" RotDown " 5}", %hwnd%
 	loop 10 {
-		SendInput "{" ZoomOut "}"
+		ControlSend,, "{" ZoomOut "}", %hwnd%
 		Sleep 100
 		if ((findImg := nm_imgSearch("nightsky.png", 50, "abovebuff"))[1] = 0)
 			break
 	}
-	sendinput "{" RotUp " 5}"
+	ControlSend,, "{" RotUp " 5}", %hwnd%
 	send "{" ZoomOut " 8}"
 	return (findImg[1]=0)
 }
@@ -16878,7 +16878,7 @@ nm_hotbar(boost:=0){
 			GetRobloxClientPos()
 			;check that roblox window exists
 			if (windowWidth > 0) {
-				pBMArea := Gdip_BitmapFromScreen(windowX "|" windowY+30 "|" windowWidth "|50")
+				pBMArea := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+30 "|" windowWidth "|50")
 				;check that: science buff visible and e button not visible (buffs not obscured)
 				if ((Gdip_ImageSearch(pBMArea, bitmaps["science"]) = 1) && (Gdip_ImageSearch(pBMArea, bitmaps["e_button"]) = 0)) {
 					if (Gdip_ImageSearch(pBMArea, bitmaps["snowflake_identifier"], &pos, , 20, , , , , 7) = 1) {
@@ -17005,17 +17005,17 @@ nm_HoneyQuest(){
 			Loop 50 ; scroll all the way up
 			{
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelUp}"
+				ControlSend,, "{WheelUp}", %hwnd%
 				Sleep 50
 			}
-			pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 			default:
 			GetRobloxClientPos(hwnd)
 			MouseMove windowX+30, windowY+offsetY+200, 5
-			sendinput "{WheelDown}"
+			ControlSend,, "{WheelDown}", %hwnd%
 			Sleep 500 ; wait for scroll to finish
-			pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 			if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 				Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 				break
@@ -17128,17 +17128,17 @@ nm_PolarQuestProg(){
 			Loop 50 ; scroll all the way up
 			{
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelUp}"
+				ControlSend,, "{WheelUp}", %hwnd%
 				Sleep 50
 			}
-			pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 			default:
 			GetRobloxClientPos(hwnd)
 			MouseMove windowX+30, windowY+offsetY+200, 5
-			sendinput "{WheelDown}"
+			ControlSend,, "{WheelDown}", %hwnd%
 			Sleep 500 ; wait for scroll to finish
-			pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 			if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 				Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 				break
@@ -17349,17 +17349,17 @@ nm_RileyQuestProg(){
 			Loop 50 ; scroll all the way up
 			{
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelUp}"
+				ControlSend,, "{WheelUp}", %hwnd%
 				Sleep 50
 			}
-			pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 			default:
 			GetRobloxClientPos(hwnd)
 			MouseMove windowX+30, windowY+offsetY+200, 5
-			sendinput "{WheelDown}"
+			ControlSend,, "{WheelDown}", %hwnd%
 			Sleep 500 ; wait for scroll to finish
-			pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 			if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 				Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 				break
@@ -17625,17 +17625,17 @@ nm_BuckoQuestProg(){
 			Loop 50 ; scroll all the way up
 			{
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelUp}"
+				ControlSend,, "{WheelUp}", %hwnd%
 				Sleep 50
 			}
-			pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 			default:
 			GetRobloxClientPos(hwnd)
 			MouseMove windowX+30, windowY+offsetY+200, 5
-			sendinput "{WheelDown}"
+			ControlSend,, "{WheelDown}", %hwnd%
 			Sleep 500 ; wait for scroll to finish
-			pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 			if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 				Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 				break
@@ -17911,17 +17911,17 @@ nm_BlackQuestProg(){
 			Loop 50 ; scroll all the way up
 			{
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelUp}"
+				ControlSend,, "{WheelUp}", %hwnd%
 				Sleep 50
 			}
-			pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 			default:
 			GetRobloxClientPos(hwnd)
 			MouseMove windowX+30, windowY+offsetY+200, 5
-			sendinput "{WheelDown}"
+			ControlSend,, "{WheelDown}", %hwnd%
 			Sleep 500 ; wait for scroll to finish
-			pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 			if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 				Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 				break
@@ -18153,17 +18153,17 @@ nm_BrownQuestProg(){
 				Loop 50 ; scroll all the way up
 				{
 					MouseMove windowX+30, windowY+offsetY+200, 5
-					sendinput "{WheelUp}"
+					ControlSend,, "{WheelUp}", %hwnd%
 					Sleep 50
 				}
-				pBMLog := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+				pBMLog := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 
 				default:
 				GetRobloxClientPos(hwnd)
 				MouseMove windowX+30, windowY+offsetY+200, 5
-				sendinput "{WheelDown}"
+				ControlSend,, "{WheelDown}", %hwnd%
 				Sleep 500 ; wait for scroll to finish
-				pBMScreen := Gdip_BitmapFromScreen(windowX+30 "|" windowY+offsetY+180 "|30|400")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+30 "|" windowY+offsetY+180 "|30|400")
 				if (Gdip_ImageSearch(pBMScreen, pBMLog, , , , , , 50) = 1) { ; end of quest log
 					Gdip_DisposeImage(pBMLog), Gdip_DisposeImage(pBMScreen)
 					break
@@ -18208,7 +18208,7 @@ nm_BrownQuestProg(){
 			GetRobloxClientPos(hwnd)
 			while ((objectives.Length < 4) && (A_Index <= 5)) { ; maximum 4 objectives
 				objectivePos := objectives.Length * QuestBarSize, objectiveSize := 0
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+BrownStart[3]+QuestBarGapSize+objectivePos "|304|" QuestBarSize-QuestBarGapSize)
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+BrownStart[3]+QuestBarGapSize+objectivePos "|304|" QuestBarSize-QuestBarGapSize)
 
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["questbarinset"], , , , 6, , 5) = 1) {
 					for size in [16,15,14,18,17] { ; in approximate order of probability
@@ -18371,7 +18371,7 @@ nm_Feed(food){
 	Loop 10
 	{
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" (54*windowWidth)//100-50 "|" Max(480, windowHeight-offsetY-150))
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" (54*windowWidth)//100-50 "|" Max(480, windowHeight-offsetY-150))
 
 		if (A_Index = 1)
 		{
@@ -18392,7 +18392,7 @@ nm_Feed(food){
 					{
 						Sleep 50
 						Gdip_DisposeImage(pBMScreen)
-						pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" (54*windowWidth)//100-50 "|" Max(480, windowHeight-offsetY-150))
+						pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" (54*windowWidth)//100-50 "|" Max(480, windowHeight-offsetY-150))
 					}
 				}
 			}
@@ -18409,7 +18409,7 @@ nm_Feed(food){
 	}
 	Loop 20 {
 		Sleep 100
-		pBMScreen := Gdip_BitmapFromScreen(windowX+(54*windowWidth)//100-300 "|" windowY+offsetY+(46*windowHeight)//100-59 "|250|100")
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+(54*windowWidth)//100-300 "|" windowY+offsetY+(46*windowHeight)//100-59 "|250|100")
 		if (Gdip_ImageSearch(pBMScreen, bitmaps["feed"], &pos, , , , , 2, , 2) = 1) {
 			Gdip_DisposeImage(pBMScreen)
 			MouseMove windowX+(54*windowWidth)//100-300+SubStr(pos, 1, InStr(pos, ",")-1)+140, windowY+offsetY+(46*windowHeight)//100-59+SubStr(pos, InStr(pos, ",")+1)+5 ; Number
@@ -18614,7 +18614,7 @@ nm_PathVars(){
 			n := s, f := s+100000000
 			while (n < f)
 			{
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 				if (Gdip_ImageSearch(pBMScreen, pBMCannon, , , , , , 2, , 2) = 1)
 				{
 					success := 1, Gdip_DisposeImage(pBMScreen)
@@ -18635,7 +18635,7 @@ nm_PathVars(){
 						break
 					}
 					Sleep 500
-					pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY "|400|125")
 					if (Gdip_ImageSearch(pBMScreen, pBMCannon, , , , , , 2, , 2) = 1)
 					{
 						Gdip_DisposeImage(pBMScreen)
@@ -18694,7 +18694,7 @@ nm_PathVars(){
 			while ((n < 2) && (A_Index <= 200))
 			{
 				Sleep 100
-				pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY "|" windowWidth "|50")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY "|" windowWidth "|50")
 				n += (Gdip_ImageSearch(pBMScreen, pBMR, , , , , , 10) = (n = 0))
 				Gdip_DisposeImage(pBMScreen)
 			}
@@ -18706,7 +18706,7 @@ nm_PathVars(){
 			sconf := windowWidth**2//3200
 			Loop 4 {
 				sleep 250
-				pBMScreen := Gdip_BitmapFromScreen(region), s := 0
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),region), s := 0
 				for i, k in ["day", "night", "day-gifted", "night-gifted", "noshadow-gifted", "noshadow-day", "noshadow-night", "wing"] {
 					s := Max(s, Gdip_ImageSearch(pBMScreen, hive_bitmaps[k], , , , , , 4, , , sconf))
 					if (s >= sconf) {
@@ -18822,16 +18822,16 @@ nm_gotoQuestgiver(giver){
 			searchRet := nm_imgSearch("e_button.png",30,"high")
 			If (searchRet[1] = 0) {
 				success:=1
-				SendInput "{" SC_E " down}"
+				ControlSend,, "{" SC_E " down}", %hwnd%
 				Sleep 100
-				SendInput "{" SC_E " up}"
+				ControlSend,, "{" SC_E " up}", %hwnd%
 				Sleep 2000
 				hwnd := GetRobloxHWND()
 				offsetY := GetYOffset(hwnd)
 				Loop 500
 				{
 					GetRobloxClientPos(hwnd)
-					pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
+					pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-50 "|" windowY+2*windowHeight//3 "|100|" windowHeight//3)
 					if (Gdip_ImageSearch(pBMScreen, bitmaps["dialog"], &pos, , , , , 10, , 3) != 1) {
 						Gdip_DisposeImage(pBMScreen)
 						break
@@ -19656,7 +19656,7 @@ ba_placePlanter(fieldName, planter, planterNum, atField:=0){
 	Loop 10
 	{
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
 
 		if (A_Index = 1)
 		{
@@ -19679,7 +19679,7 @@ ba_placePlanter(fieldName, planter, planterNum, atField:=0){
 					{
 						Sleep 50
 						Gdip_DisposeImage(pBMScreen)
-						pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
+						pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
 					}
 				}
 			}
@@ -19698,7 +19698,7 @@ ba_placePlanter(fieldName, planter, planterNum, atField:=0){
 	{
 		GetRobloxClientPos(hwnd)
 		loop 3 {
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 				MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 				Sleep 150
@@ -19796,16 +19796,16 @@ ba_harvestPlanter(planterNum){
 			return 0
 	}
 	else {
-		SendInput "{" SC_E " down}"
+		ControlSend,, "{" SC_E " down}", %hwnd%
 		Sleep 100
-		SendInput "{" SC_E " up}"
+		ControlSend,, "{" SC_E " up}", %hwnd%
 
 		hwnd := GetRobloxHWND()
 		offsetY := GetYOffset(hwnd)
 		Loop 50
 		{
 			GetRobloxClientPos(hwnd)
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , , , 2, , 6) = 0) {
 				Gdip_DisposeImage(pBMScreen)
 				break
@@ -19822,7 +19822,7 @@ ba_harvestPlanter(planterNum){
 		GetRobloxClientPos(hwnd)
 		if ((HarvestFullGrown = 1) && !PlanterHarvestNow%planterNum%) {
 			loop 3 {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["no"], &pos, , , , , 2, , 3) = 1) {
 					MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 					Sleep 150
@@ -19838,7 +19838,7 @@ ba_harvestPlanter(planterNum){
 		}
 		else {
 			loop 3 {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 					MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 					Sleep 150
@@ -20066,17 +20066,17 @@ nm_planterSS(){
 			nm_setStatus("Traveling", PlanterName%A_Index% " (" PlanterField%A_Index% ")")
 			nm_gotoPlanter(PlanterField%A_Index%, 1)
 
-			sendinput "{" ZoomIn " 2}"
+			ControlSend,, "{" ZoomIn " 2}", %hwnd%
 
 			; fields where the view is initially obstructed
 			If ((PlanterField%A_Index% = "Rose") || (PlanterField%A_Index% = "Mountain Top")) {
 				sleep 200
-				sendinput "{" RotRight " 3}"
+				ControlSend,, "{" RotRight " 3}", %hwnd%
 			}
 			If ((PlanterField%A_Index% = "Bamboo") || (PlanterField%A_Index% = "Rose") || (PlanterField%A_Index% = "Cactus") || (PlanterField%A_Index% = "Mountain Top")) {
 				loop 3 {
 					sleep 200
-					sendinput "{" ZoomOut " 2}"
+					ControlSend,, "{" ZoomOut " 2}", %hwnd%
 				}
 			}
 
@@ -20162,7 +20162,7 @@ mp_PlantPlanter(PlanterIndex) {
 	Loop 10
 	{
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
 
 		if (A_Index = 1)
 		{
@@ -20183,7 +20183,7 @@ mp_PlantPlanter(PlanterIndex) {
 					{
 						Sleep 50
 						Gdip_DisposeImage(pBMScreen)
-						pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
+						pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
 					}
 				}
 			}
@@ -20202,7 +20202,7 @@ mp_PlantPlanter(PlanterIndex) {
 	{
 		GetRobloxClientPos(hwnd)
 		loop 3 {
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 				MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 				Sleep 150
@@ -20311,7 +20311,7 @@ mp_UseGlitter(PlanterIndex, atField:=0) {
 	Loop 10
 	{
 		GetRobloxClientPos(hwnd)
-		pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
+		pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|" windowWidth//2 "|" Max(480, windowHeight-offsetY-150))
 
 		if (A_Index = 1)
 		{
@@ -20332,7 +20332,7 @@ mp_UseGlitter(PlanterIndex, atField:=0) {
 					{
 						Sleep 50
 						Gdip_DisposeImage(pBMScreen)
-						pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY+offsetY+150 "|306|" Max(480, windowHeight-offsetY-150))
+						pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX "|" windowY+offsetY+150 "|306|" Max(480, windowHeight-offsetY-150))
 					}
 				}
 			}
@@ -20436,16 +20436,16 @@ mp_HarvestPlanter(PlanterIndex) {
 		return 1
 	}
 	else {
-		sendinput "{" SC_E " down}"
+		ControlSend,, "{" SC_E " down}", %hwnd%
 		Sleep 100
-		sendinput "{" SC_E " up}"
+		ControlSend,, "{" SC_E " up}", %hwnd%
 
 		hwnd := GetRobloxHWND()
 		offsetY := GetYOffset(hwnd)
 		Loop 50
 		{
 			GetRobloxClientPos(hwnd)
-			pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
+			pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-200 "|" windowY+offsetY+36 "|200|120")
 			if (Gdip_ImageSearch(pBMScreen, bitmaps["e_button"], , , , , , 2, , 6) = 0) {
 				Gdip_DisposeImage(pBMScreen)
 				break
@@ -20462,7 +20462,7 @@ mp_HarvestPlanter(PlanterIndex) {
 		GetRobloxClientPos(hwnd)
 		if ((PlanterHarvestFull%PlanterIndex% == "Full") && !PlanterHarvestNow%PlanterIndex%) {
 			loop 3 {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["no"], &pos, , , , , 2, , 3) = 1) {
 					MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 					Sleep 150
@@ -20481,7 +20481,7 @@ mp_HarvestPlanter(PlanterIndex) {
 		}
 		else {
 			loop 3 {
-				pBMScreen := Gdip_BitmapFromScreen(windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
+				pBMScreen := Gdip_CloneBitmapArea(Gdip_BitmapFromHWND(hwnd := GetRobloxHWND()),windowX+windowWidth//2-250 "|" windowY+windowHeight//2-52 "|500|150")
 				if (Gdip_ImageSearch(pBMScreen, bitmaps["yes"], &pos, , , , , 2, , 2) = 1) {
 					MouseMove windowX+windowWidth//2-250+SubStr(pos, 1, InStr(pos, ",")-1), windowY+windowHeight//2-52+SubStr(pos, InStr(pos, ",")+1)
 					Sleep 150
@@ -20814,7 +20814,7 @@ stop(*){
 		Hotkey StartHotkey, "Off"
 	}
 	nm_endWalk()
-	sendinput "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}"
+	ControlSend,, "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}", %hwnd%
 	Click "Up"
 	if(MacroState) {
 		TotalRuntime:=TotalRuntime+(nowUnix()-MacroStartTime)
@@ -20854,15 +20854,15 @@ nm_Pause(*){
 		else
 		{
 			if(FwdKeyState)
-				sendinput "{" FwdKey " down}"
+				ControlSend,, "{" FwdKey " down}", %hwnd%
 			if(BackKeyState)
-				sendinput "{" BackKey " down}"
+				ControlSend,, "{" BackKey " down}", %hwnd%
 			if(LeftKeyState)
-				sendinput "{" LeftKey " down}"
+				ControlSend,, "{" LeftKey " down}", %hwnd%
 			if(RightKeyState)
-				sendinput "{" RightKey " down}"
+				ControlSend,, "{" RightKey " down}", %hwnd%
 			if(SpaceKeyState)
-				sendinput "{" SC_Space " down}"
+				ControlSend,, "{" SC_Space " down}", %hwnd%
 		}
 		MacroState:=2
 		if WinExist("Status.ahk ahk_class AutoHotkey")
@@ -20886,7 +20886,7 @@ nm_Pause(*){
 		else
 		{
 			FwdKeyState:=GetKeyState(FwdKey), BackKeyState:=GetKeyState(BackKey), LeftKeyState:=GetKeyState(LeftKey), RightKeyState:=GetKeyState(RightKey), SpaceKeyState:=GetKeyState(SC_Space)
-			sendinput "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}"
+			ControlSend,, "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}", %hwnd%
 			Click "Up"
 		}
 		MacroState:=1
@@ -20924,9 +20924,9 @@ autoclicker(*){
 			%var% := default
 
 	while ((ClickMode || (A_Index <= ClickCount)) && toggle) {
-		sendinput "{click down}"
+		ControlSend,, "{click down}", %hwnd%
 		sleep ClickDuration
-		sendinput "{click up}"
+		ControlSend,, "{click up}", %hwnd%
 		sleep ClickDelay
 	}
 	toggle := 0
@@ -20954,7 +20954,7 @@ nm_WM_COPYDATA(wParam, lParam, *){
 			SpaceKeyState:=GetKeyState(SC_Space)
 			PauseState:=state
 			PauseObjective:=objective
-			sendinput "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}"
+			ControlSend,, "{" FwdKey " up}{" BackKey " up}{" LeftKey " up}{" RightKey " up}{" SC_Space " up}", %hwnd%
 			click "up"
 		}
 		;Announce Guiding Star
@@ -20976,15 +20976,15 @@ nm_WM_COPYDATA(wParam, lParam, *){
 			else
 			{
 				if(FwdKeyState)
-					sendinput "{" FwdKey " down}"
+					ControlSend,, "{" FwdKey " down}", %hwnd%
 				if(BackKeyState)
-					sendinput "{" BackKey " down}"
+					ControlSend,, "{" BackKey " down}", %hwnd%
 				if(LeftKeyState)
-					sendinput "{" LeftKey " down}"
+					ControlSend,, "{" LeftKey " down}", %hwnd%
 				if(RightKeyState)
-					sendinput "{" RightKey " down}"
+					ControlSend,, "{" RightKey " down}", %hwnd%
 				if(SpaceKeyState)
-					sendinput "{" SC_Space " down}"
+					ControlSend,, "{" SC_Space " down}", %hwnd%
 			}
 		}
 		DetectHiddenWindows 0
